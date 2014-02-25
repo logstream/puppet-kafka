@@ -138,17 +138,33 @@ already have explicit Puppet class parameters (such as `$broker_id`).  See the e
 
 ### Using Hiera
 
-Simple example, using default settings.  This will start a Kafka broker that listens on port `9092/tcp` and that will
-connect to the ZooKeeper server running at `localhost:2181`.
+
+A "full" single-node example that includes the deployment of [supervisord](http://www.supervisord.org/) via
+[puppet-supervisor](https://github.com/miguno/puppet-supervisor) and
+[ZooKeeper](http://zookeeper.apache.org/) via [puppet-zookeeper](https://github.com/miguno/puppet-zookeeper).
+Here, both ZooKeeper and Kafka are running on the same machine.  The Kafka broker will listen on port `9092/tcp` and
+will connect to the ZooKeeper server running at `localhost:2181`.  That's a nice setup for your local development
+laptop, for instance.
+
 
 ```yaml
 ---
 classes:
   - kafka::service
   - supervisor
+  - zookeeper::service
+
+## Custom supervisord settings (note: this is supervisord, not Storm's Supervisor daemon)
+supervisor::logfile_maxbytes: '20MB'
+supervisor::logfile_backups: 5
+
+## Custom ZooKeeper settings
+zookeeper::autopurge_snap_retain_count: 3
+zookeeper::max_client_connections: 500
 ```
 
-More sophisticated example that overrides some of the default settings and also demonstrates the use of `$config_map`.
+A more sophisticated example that overrides some of the default settings and also demonstrates the use of `$config_map`.
+In this example, the broker connects to the ZooKeeper server `zookeeper1`.
 Take a look at [Kafka's Java/JVM configuration notes](https://kafka.apache.org/documentation.html#java) as well as
 recommended [production configurations](https://kafka.apache.org/documentation.html#prodconfig).
 
@@ -167,6 +183,8 @@ kafka::brokers:
       log.retention.hours: 48
     kafka_heap_opts: '-Xms2G -Xmx2G -XX:NewSize=256m -XX:MaxNewSize=256m'
     kafka_opts: '-XX:CMSInitiatingOccupancyFraction=70 -XX:+PrintTenuringDistribution'
+    zookeeper_connect:
+      - 'zookeeper1:2181'
 
 # Optional: Manage /etc/security/limits.conf to tune the maximum number
 # of open files, which is a typical setting you must change for Kafka
@@ -175,12 +193,11 @@ kafka::limits_manage: true
 kafka::limits_nofile: 65536
 ```
 
-The next example shows how to deploy multiple Kafka brokers per machine.  This is not a recommended setup for
-production but helpful during development and testing.  In this example, the brokers connect to the ZooKeeper server
-`zookeeper1`.  The important aspect of such a multi-broker setup is that for each you define unique settings for
-configuration parameters such as the broker id, certain files and directories, TCP ports, etc.  In a normal Kafka setup
-(i.e.  one broker per machine) you can normally safely rely on the default values for those settings, which will result
-in a much simpler and shorter Hiera configuration.
+The next example shows how to deploy multiple Kafka brokers per machine.  This is not a recommended setup for production
+but helpful during development and testing.  The important aspect of such a multi-broker setup is that for each you
+define unique settings for configuration parameters such as the broker id, certain files and directories, TCP ports, etc.
+In a normal Kafka setup (i.e.  one broker per machine) you can normally safely rely on the default values for those
+settings, which will result in a much simpler and shorter Hiera configuration.
 
 ```yaml
 ---
@@ -222,29 +239,6 @@ kafka::brokers:
     logging_config: '/opt/kafka/config/log4j-2.properties'
     zookeeper_connect:
       - 'zookeeper1:2181'
-```
-
-A "full" single-node example that includes the deployment of [supervisord](http://www.supervisord.org/) via
-[puppet-supervisor](https://github.com/miguno/puppet-supervisor) and
-[ZooKeeper](http://zookeeper.apache.org/) via [puppet-zookeeper](https://github.com/miguno/puppet-zookeeper).
-Here, both ZooKeeper and Kafka are running on the same machine.  That's a nice setup for your local development
-laptop, for instance.
-
-
-```yaml
----
-classes:
-  - kafka::service
-  - supervisor
-  - zookeeper::service
-
-## Supervisord
-supervisor::logfile_maxbytes: '20MB'
-supervisor::logfile_backups: 5
-
-## ZooKeeper
-zookeeper::autopurge_snap_retain_count: 3
-zookeeper::max_client_connections: 500
 ```
 
 
