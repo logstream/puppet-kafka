@@ -70,6 +70,7 @@ See section [Usage](#usage) below.
   Java package is installed _before_ Kafka to prevent startup problems.
     * Because different teams may have different approaches to install "base" packages such as Java, this module does
       intentionally not puppet-require Java directly.
+    * Take a look at LinkedIn's [Java setup for Kafka](https://kafka.apache.org/documentation.html#java).
 * This module requires the following **additional Puppet modules**:
 
     * [puppet-limits](https://github.com/miguno/puppet-limits)
