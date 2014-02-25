@@ -48,7 +48,7 @@ See section [Usage](#usage) below.
 * Supports RHEL OS family (e.g. RHEL 6, CentOS 6, Amazon Linux).
     * Code contributions to support additional OS families are welcome!
 * Supports multiple Kafka brokers per machine via the class parameter `kafka::brokers`, which is a hash value.
-    * Note: For production setups it _is not_ recommended to run multipole brokers per machine.
+    * Note: For production setups it _is not_ recommended to run multiple brokers per machine.
 * Supports tuning of system-level configuration such as the maximum number of open files (cf.
   `/etc/security/limits.conf`) to optimize the performance of your Kafka deployments.
 * Kafka is run under process supervision via [supervisord](http://www.supervisord.org/) version 3.0+.
