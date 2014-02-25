@@ -144,7 +144,7 @@ A "full" single-node example that includes the deployment of [supervisord](http:
 [ZooKeeper](http://zookeeper.apache.org/) via [puppet-zookeeper](https://github.com/miguno/puppet-zookeeper).
 Here, both ZooKeeper and Kafka are running on the same machine.  The Kafka broker will listen on port `9092/tcp` and
 will connect to the ZooKeeper server running at `localhost:2181`.  That's a nice setup for your local development
-laptop, for instance.
+laptop or CI server, for instance.
 
 
 ```yaml
