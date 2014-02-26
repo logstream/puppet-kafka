@@ -382,7 +382,7 @@ Copyright © 2014 Michael G. Noll
 See [LICENSE](LICENSE) for licensing information.
 
 
-<a name="references">Further references</a>
+<a name="references"></a>
 
 # References
 
