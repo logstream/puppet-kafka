@@ -27,6 +27,7 @@ Table of Contents
 * <a href="#changelog">Change log</a>
 * <a href="#contributing">Contributing</a>
 * <a href="#license">License</a>
+* <a href="#references">References</a>
 
 ---
 
@@ -357,14 +358,14 @@ kafka::brokers:
 
 <a name="changelog"></a>
 
-## Change log
+# Change log
 
 See [CHANGELOG](CHANGELOG.md).
 
 
 <a name="contributing"></a>
 
-## Contributing to puppet-kafka
+# Contributing to puppet-kafka
 
 Code contributions, bug reports, feature requests etc. are all welcome.
 
@@ -374,8 +375,17 @@ to send patches and pull requests to puppet-kafka.
 
 <a name="license"></a>
 
-## License
+# License
 
 Copyright © 2014 Michael G. Noll
 
 See [LICENSE](LICENSE) for licensing information.
+
+
+<a name="references">Further references</a>
+
+# References
+
+Puppet modules similar to this module:
+
+* [wikimedia/puppet-kafka](https://github.com/wikimedia/puppet-kafka) -- apparently also supports Kafka mirroring and jmxtrans monitoring
