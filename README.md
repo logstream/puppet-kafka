@@ -389,4 +389,5 @@ See [LICENSE](LICENSE) for licensing information.
 Puppet modules similar to this module:
 
 * [wikimedia/puppet-kafka](https://github.com/wikimedia/puppet-kafka) -- focuses on Debian as the target OS, and
-  apparently also supports Kafka mirroring and jmxtrans monitoring
+  apparently also supports Kafka mirroring and jmxtrans monitoring (the latter for sending JVM and Kafka broker metrics
+  to tools such as Ganglia or Graphite)
