@@ -66,6 +66,9 @@ See section [Usage](#usage) below.
   for pulling the Kafka package (i.e. RPM).
     * We provide [wirbelsturm-rpm-kafka](https://github.com/miguno/wirbelsturm-rpm-kafka) so that you can conveniently
       build such an RPM yourself.
+    * Because we run Kafka via supervisord through [puppet-supervisor](https://github.com/miguno/puppet-supervisor), the
+      supervisord RPM must be available, too.  See [puppet-supervisor](https://github.com/miguno/puppet-supervisor)
+      for details.
 * This module requires that the target machines have a **Java JRE/JDK installed** (e.g. via a separate Puppet module
   such as [puppetlabs-java](https://github.com/puppetlabs/puppetlabs-java)).  You may also want to make sure that the
   Java package is installed _before_ Kafka to prevent startup problems.
