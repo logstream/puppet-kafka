@@ -38,15 +38,8 @@ define kafka::broker (
   validate_array($zookeeper_connect)
 
   # These 'log' directories are used to store the actual data being sent to Kafka.  Do not confuse them with logging
-  # directories such as /var/log/*.
-  file { $log_dirs:
-    ensure       => directory,
-    owner        => $kafka::user,
-    group        => $kafka::group,
-    mode         => '0750',
-    recurse      => true,
-    recurselimit => 0,
-  }
+  # directories such as /var/log/*.  `kafka::broker::create_log_dirs` is defined at the bottom of this file.
+  kafka::broker::create_log_dirs { $log_dirs: }
 
   file { $config:
     ensure  => file,
@@ -158,4 +151,38 @@ define kafka::broker (
 
   }
 
+}
+
+# == Defined type: kafka::broker::create_log_dirs
+#
+# A kind of helper "function" that recursively creates an array of directories.
+#
+# We need such a crude workaround because Puppet does not provide such a feature out of the box in a clean way.
+#
+# Usage: kafka::broker::create_log_dirs { $array_of_dirs: }
+#
+# === Parameters
+# We use the name (via $name) of the defined type to specify the input.  The input is expected to be an array of
+# strings, where each string represents the absolute path of a directory.
+#
+# Example input: ['/foo/alice', '/foo/bob', '/bar']
+#
+# Note on Puppet behavior: $name is the variable used when iterating through this input array.
+#
+define kafka::broker::create_log_dirs {
+  # This exec ensures we create intermediate directories for directory with the full path $name
+  exec { "create-kafka-log-directory-${name}":
+    command => "mkdir -p ${name}",
+    path    => ['/bin', '/sbin'],
+  }
+  ->
+  file { "kafka-log-directory-${name}":
+    path         => $name,
+    ensure       => directory,
+    owner        => $kafka::user,
+    group        => $kafka::group,
+    mode         => '0750',
+    recurse      => true,
+    recurselimit => 0,
+  }
 }
