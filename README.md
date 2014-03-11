@@ -132,6 +132,9 @@ already have explicit Puppet class parameters (such as `$broker_id`).  See the e
 
 # Usage
 
+**IMPORTANT: Make sure you read and follow the [Requirements and assumptions](#requirements) section above.**
+**Otherwise the examples below will of course not work.**
+
 
 <a name="configuration-examples"></a>
 
