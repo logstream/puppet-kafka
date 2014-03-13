@@ -34,6 +34,26 @@ describe 'kafka::broker' do
           }
         end
 
+        describe "kafka broker with a custom broker id on #{osfamily}" do
+          let(:params) {{
+            :broker_id => 23,
+          }}
+
+          it { should contain_file('/opt/kafka/config/server-0.properties')
+            .with_content(/^broker.id=23$/)
+          }
+        end
+
+        describe "kafka broker with a custom port on #{osfamily}" do
+          let(:params) {{
+            :broker_port => 9093,
+          }}
+
+          it { should contain_file('/opt/kafka/config/server-0.properties')
+            .with_content(/^port=9093$/)
+          }
+        end
+
         describe "kafka broker with a single custom ZK server for $zookeeper_connect on #{osfamily}" do
           let(:params) {{
             :zookeeper_connect => ['zookeeper1:1234'],
