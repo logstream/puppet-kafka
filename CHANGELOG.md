@@ -5,12 +5,12 @@
 IMPROVEMENTS:
 
 * Initial support for testing this module.
-    * A skeleton for acceptance testing (`rake acceptance`) has been added, but not any real acceptance tests yet.
+    * A skeleton for acceptance testing (`rake acceptance`) was also added.
 
 BACKWARDS INCOMPATIBILITY:
 
 * Change default value of `$package_ensure` from "latest" to "present".
-* Puppet module fails if run on an unsupported platform.  Currently, we only support the RHEL OS family.
+* Puppet module fails if run on an unsupported platform.  Currently we only support the RHEL OS family.
 
 
 ## 1.0.1 (March 11, 2014)
