@@ -34,6 +34,26 @@ describe 'kafka::broker' do
           }
         end
 
+        describe "kafka broker with a single custom ZK server for $zookeeper_connect on #{osfamily}" do
+          let(:params) {{
+            :zookeeper_connect => ['zookeeper1:1234'],
+          }}
+
+          it { should contain_file('/opt/kafka/config/server-0.properties')
+            .with_content(/^zookeeper.connect=zookeeper1:1234$/)
+          }
+        end
+
+        describe "kafka broker with a custom three-node ZK quorum for $zookeeper_connect on #{osfamily}" do
+          let(:params) {{
+            :zookeeper_connect => ['zookeeper1:1234', 'zookeeper2:5678','zkserver3:2181'],
+          }}
+
+          it { should contain_file('/opt/kafka/config/server-0.properties')
+            .with_content(/^zookeeper.connect=zookeeper1:1234,zookeeper2:5678,zkserver3:2181$/)
+          }
+        end
+
         describe "kafka broker with two directories for $log_dirs on #{osfamily}" do
           let(:params) {{
             :log_dirs => ['/app/kafka-broker-0', '/app/kafka-broker-1'],
