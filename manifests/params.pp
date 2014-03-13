@@ -19,7 +19,7 @@ class kafka::params {
   $limits_nofile       = 65536
   $logging_config      = "${base_dir}/config/log4j-0.properties"
   $logging_config_template        = 'kafka/log4j.properties.erb'
-  $package_ensure      = 'latest'
+  $package_ensure      = 'present'
   $package_name        = 'kafka'
   $service_autorestart = true
   $service_enable      = true
