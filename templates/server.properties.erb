@@ -11,7 +11,7 @@ broker.id=<%= @broker_id %>
 port=<%= @broker_port %>
 
 # A comma seperated list of directories under which to store log files
-log.dirs=<%= @log_dirs %>
+log.dirs=<%= @log_dirs.join(',') %>
 
 # Zookeeper connection string (see zookeeper docs for details).
 # This is a comma separated host:port pairs, each corresponding to a zk

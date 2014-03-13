@@ -12,6 +12,10 @@ BACKWARDS INCOMPATIBILITY:
 * Change default value of `$package_ensure` from "latest" to "present".
 * Puppet module fails if run on an unsupported platform.  Currently we only support the RHEL OS family.
 
+BUG FIXES:
+
+* Properly generate broker configuration when multiple directories are specified for `$log_dirs`.
+
 
 ## 1.0.1 (March 11, 2014)
 
