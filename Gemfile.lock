@@ -192,6 +192,7 @@ DEPENDENCIES
   puppetlabs_spec_helper
   rake
   rspec-puppet!
+  serverspec
   travis
   travis-lint
   vagrant-wrapper

@@ -21,5 +21,11 @@ describe 'kafka class' do
       #it { should be_installed }
     end
 
+    # This is an example serverspec test (http://serverspec.org/).
+    # Vagrant machines will always run an SSH server by default, so this test should always work.
+    describe port(22) do
+        it { should be_listening }
+    end
+
   end
 end
