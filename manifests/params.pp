@@ -40,4 +40,12 @@ class kafka::params {
   $user_ensure         = 'present'
   $user_home           = '/home/kafka'
   $user_managehome     = true
+
+  case $::osfamily {
+    'RedHat': {}
+
+    default: {
+      fail("The ${module_name} module is not supported on a ${::osfamily} based system.")
+    }
+  }
 }
