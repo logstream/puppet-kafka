@@ -1,6 +1,17 @@
-# Note: Use $kafka_gc_log_opts for everything but configuring `-Xloggc:...`.  Use $gc_log_file for the latter.
-# Note: Use $kafka_log4j_opts for everything but configuring `-Dlog4j.configuration.file=...`.  Use $logging_config for
-#       the latter.
+# == Class kafka::broker
+#
+# === Parameters
+#
+# TODO: Document each class parameter.
+#
+# [*kafka_gc_log_opts*]
+#   Use this parameter for all Java Garbage Collection settings with the exception of configuring `-Xloggc:...`.
+#   Use $gc_log_file for the latter.
+#
+# [*kafka_log4j_opts*]
+#   Use this parameter for all logging settings with the exception of configuring `-Dlog4j.configuration.file=...`.
+#   Use $logging_config for the latter.
+#
 # Note: When using a custom namespace/chroot in the ZooKeeper connection string you must manually create the namespace
 #       in ZK first (e.g. in 'localhost:2181/kafka' the namespace is '/kafka').
 define kafka::broker (
