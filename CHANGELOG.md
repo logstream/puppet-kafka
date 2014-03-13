@@ -2,6 +2,11 @@
 
 ## 1.0.2 (March 13, 2014)
 
+IMPROVEMENTS:
+
+* Initial support for testing this module.
+    * A skeleton for acceptance testing (`rake acceptance`) has been added, but not any real acceptance tests yet.
+
 BACKWARDS INCOMPATIBILITY:
 
 * Change default value of `$package_ensure` from "latest" to "present".

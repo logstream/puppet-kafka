@@ -397,3 +397,7 @@ Puppet modules similar to this module:
 * [wikimedia/puppet-kafka](https://github.com/wikimedia/puppet-kafka) -- focuses on Debian as the target OS, and
   apparently also supports Kafka mirroring and jmxtrans monitoring (the latter for sending JVM and Kafka broker metrics
   to tools such as Ganglia or Graphite)
+
+The test setup of this module was derived from:
+
+* [puppet-module-skeleton](https://github.com/garethr/puppet-module-skeleton)
