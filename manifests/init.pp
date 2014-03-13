@@ -1,3 +1,17 @@
+# == Class: kafka
+#
+# Deploys Apache Kafka brokers.
+#
+# You should not use this class directly but rather kafka::service combined with the kafka::brokers class variable
+# (when using Hiera) or kafka::broker directly (when writing manifests), respectively.
+#
+# === Parameters
+#
+# TODO: Document each class parameter.
+#
+# [*sample_parameter*]
+#   Explanation of what this parameter affects and what it defaults to.
+#
 class kafka (
   $command             = $kafka::params::command,
   $config_template     = $kafka::params::config_template,
