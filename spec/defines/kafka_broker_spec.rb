@@ -60,7 +60,8 @@ describe 'kafka::broker' do
           }}
 
           it { should contain_file('/opt/kafka/config/server-0.properties')
-            .with_content(/^log.dirs=\/app\/kafka-broker-0,\/app\/kafka-broker-1$/)}
+            .with_content(/^log.dirs=\/app\/kafka-broker-0,\/app\/kafka-broker-1$/)
+          }
         end
 
       end
