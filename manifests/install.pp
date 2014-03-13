@@ -1,3 +1,5 @@
+# == Class kafka::install
+#
 class kafka::install inherits kafka {
 
   group { $group:
