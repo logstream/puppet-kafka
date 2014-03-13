@@ -1,3 +1,5 @@
+# == Class kafka::params
+#
 class kafka::params {
   $base_dir            = '/opt/kafka' # Base directory under which the Kafka RPM is installed
   $command             = "${base_dir}/bin/kafka-run-class.sh kafka.Kafka"
