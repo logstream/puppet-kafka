@@ -1,4 +1,4 @@
-# puppet-kafka
+# puppet-kafka [![Build Status](https://travis-ci.org/miguno/puppet-kafka.png?branch=master)](https://travis-ci.org/miguno/puppet-kafka)
 
 Wirbelsturm-compatible [Puppet](http://puppetlabs.com/) module to deploy [Kafka](http://kafka.apache.org/) 0.8+
 servers/brokers.
