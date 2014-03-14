@@ -4,13 +4,13 @@ describe 'kafka' do
   context 'supported operating systems' do
     ['RedHat'].each do |osfamily|
       ['RedHat', 'CentOS', 'Amazon', 'Fedora'].each do |operatingsystem|
+        let(:facts) {{
+          :osfamily        => osfamily,
+          :operatingsystem => operatingsystem,
+        }}
+
         describe "kafka class with default settings on #{osfamily}" do
           let(:params) {{ }}
-          let(:facts) {{
-            :osfamily => osfamily,
-            :operatingsystem => operatingsystem,
-          }}
-
           # We must mock $::operatingsystem because otherwise this test will
           # fail when you run the tests on e.g. Mac OS X.
           it { should compile.with_all_deps }
