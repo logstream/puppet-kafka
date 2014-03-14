@@ -34,6 +34,14 @@ describe 'kafka' do
             'mode'  => '0755',
           })}
         end
+
+        describe "kafka class with limits_manage enabled on #{osfamily}" do
+          let(:params) {{
+            :limits_manage => true,
+          }}
+          it { should contain_limits__fragment('kafka/soft/nofile').with_value(65536) }
+          it { should contain_limits__fragment('kafka/hard/nofile').with_value(65536) }
+        end
       end
     end
   end
