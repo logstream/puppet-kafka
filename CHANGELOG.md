@@ -1,6 +1,6 @@
 # Change log
 
-## 1.0.2 (March 13, 2014)
+## 1.0.2 (March 14, 2014)
 
 IMPROVEMENTS:
 
