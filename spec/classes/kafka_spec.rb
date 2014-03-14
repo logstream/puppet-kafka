@@ -4,7 +4,7 @@ describe 'kafka' do
   context 'supported operating systems' do
     ['RedHat'].each do |osfamily|
       ['RedHat', 'CentOS', 'Amazon', 'Fedora'].each do |operatingsystem|
-        describe "kafka class without any parameters on #{osfamily}" do
+        describe "kafka class with default settings on #{osfamily}" do
           let(:params) {{ }}
           let(:facts) {{
             :osfamily => osfamily,
