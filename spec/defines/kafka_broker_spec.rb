@@ -23,6 +23,24 @@ describe 'kafka::broker' do
           it { should contain_class("kafka") }
           it { should contain_kafka__broker('broker0') }
 
+          it { should contain_supervisor__service('kafka-broker-0').with({
+            'ensure'      => 'present',
+            'enable'      => true,
+            'command'     => '/opt/kafka/bin/kafka-run-class.sh kafka.Kafka /opt/kafka/config/server-0.properties',
+            'environment' => """JMX_PORT=9999,KAFKA_GC_LOG_OPTS=\"-Xloggc:/var/log/kafka/daemon-gc-0.log -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps\",KAFKA_HEAP_OPTS=\"-Xmx256M\",KAFKA_JMX_OPTS=\"-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false\",KAFKA_JVM_PERFORMANCE_OPTS=\"-server -XX:+UseCompressedOops -XX:+UseParNewGC -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled -XX:+CMSScavengeBeforeRemark -XX:+DisableExplicitGC -Djava.awt.headless=true\",KAFKA_LOG4J_OPTS=\"-Dlog4j.configuration=file:/opt/kafka/config/log4j-0.properties\",""",
+            'user'        => 'kafka',
+            'group'       => 'kafka',
+            'autorestart' => true,
+            'startsecs'   => 10,
+            'retries'     => 999,
+            'stopsignal'  => 'INT',
+            'stopasgroup' => true,
+            'stdout_logfile_maxsize' => '20MB',
+            'stdout_logfile_keep'    => 5,
+            'stderr_logfile_maxsize' => '20MB',
+            'stderr_logfile_keep'    => 10,
+          })}
+
           it { should contain_file(default_broker_configuration_file).
             with_content(/^broker.id=0$/).
             with_content(/^port=9092$/).
