@@ -400,8 +400,7 @@ Of particular interest are:
 # TODO
 
 * Enhance in-line documentation of Puppet manifests.
-* Add unit tests and specs.
-* Add Travis CI setup.
+* Add more unit tests and specs.
 
 
 <a name="changelog"></a>
