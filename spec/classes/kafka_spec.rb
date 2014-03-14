@@ -21,6 +21,18 @@ describe 'kafka' do
 
           it { should have_kafka__broker__resource_count(0) }
           it { should contain_package('kafka').with_ensure('present') }
+
+          it { should contain_file('/opt/kafka/logs').with({
+            'owner' => 'kafka',
+            'group' => 'kafka',
+            'mode'  => '0755',
+          })}
+
+          it { should contain_file('/var/log/kafka').with({
+            'owner' => 'kafka',
+            'group' => 'kafka',
+            'mode'  => '0755',
+          })}
         end
       end
     end
