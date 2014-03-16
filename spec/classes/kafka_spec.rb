@@ -38,15 +38,17 @@ describe 'kafka' do
           })}
 
           it { should contain_file('/opt/kafka/logs').with({
-            'owner' => 'kafka',
-            'group' => 'kafka',
-            'mode'  => '0755',
+            'ensure' => 'directory',
+            'owner'  => 'kafka',
+            'group'  => 'kafka',
+            'mode'   => '0755',
           })}
 
           it { should contain_file('/var/log/kafka').with({
-            'owner' => 'kafka',
-            'group' => 'kafka',
-            'mode'  => '0755',
+            'ensure' => 'directory',
+            'owner'  => 'kafka',
+            'group'  => 'kafka',
+            'mode'   => '0755',
           })}
         end
 
