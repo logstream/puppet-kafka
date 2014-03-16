@@ -41,13 +41,23 @@ describe 'kafka::broker' do
             'stderr_logfile_keep'    => 10,
           })}
 
-          it { should contain_file(default_broker_configuration_file).
+          it { should contain_file(default_broker_configuration_file).with({
+              'ensure' => 'file',
+              'owner'  => 'root',
+              'group'  => 'root',
+              'mode'   => '0644',
+            }).
             with_content(/^broker.id=0$/).
             with_content(/^port=9092$/).
             with_content(/^log.dirs=\/app\/kafka-broker-0$/).
             with_content(/^zookeeper.connect=localhost:2181$/)
           }
-          it { should contain_file(default_logging_configuration_file).
+          it { should contain_file(default_logging_configuration_file).with({
+              'ensure' => 'file',
+              'owner'  => 'root',
+              'group'  => 'root',
+              'mode'   => '0644',
+            }).
             with_content(/^log4j.appender.kafkaAppender.File=\/var\/log\/kafka\/server-0.log$/).
             with_content(/^log4j.appender.stateChangeAppender.File=\/var\/log\/kafka\/state-change-0.log$/).
             with_content(/^log4j.appender.requestAppender.File=\/var\/log\/kafka\/kafka-request-0.log$/).
