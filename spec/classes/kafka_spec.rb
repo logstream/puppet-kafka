@@ -22,6 +22,21 @@ describe 'kafka' do
           it { should have_kafka__broker__resource_count(0) }
           it { should contain_package('kafka').with_ensure('present') }
 
+          it { should contain_group('kafka').with({
+            'ensure'     => 'present',
+            'gid'        => 53002,
+          })}
+
+          it { should contain_user('kafka').with({
+            'ensure'     => 'present',
+            'home'       => '/home/kafka',
+            'shell'      => '/bin/bash',
+            'uid'        => 53002,
+            'comment'    => 'Kafka system account',
+            'gid'        => 'kafka',
+            'managehome' => true,
+          })}
+
           it { should contain_file('/opt/kafka/logs').with({
             'owner' => 'kafka',
             'group' => 'kafka',
