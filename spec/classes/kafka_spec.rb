@@ -57,6 +57,32 @@ describe 'kafka' do
           it { should contain_limits__fragment('kafka/soft/nofile').with_value(65536) }
           it { should contain_limits__fragment('kafka/hard/nofile').with_value(65536) }
         end
+
+        describe "kafka class with disabled group management on #{osfamily}" do
+          let(:params) {{
+            :group_manage => false,
+          }}
+          it { should_not contain_group('kafka') }
+          it { should contain_user('kafka') }
+        end
+
+        describe "kafka class with disabled user management on #{osfamily}" do
+          let(:params) {{
+            :user_manage  => false,
+          }}
+          it { should contain_group('kafka') }
+          it { should_not contain_user('kafka') }
+        end
+
+        describe "kafka class with disabled user and group management on #{osfamily}" do
+          let(:params) {{
+            :group_manage => false,
+            :user_manage  => false,
+          }}
+          it { should_not contain_group('kafka') }
+          it { should_not contain_user('kafka') }
+        end
+
       end
     end
   end

@@ -2,20 +2,24 @@
 #
 class kafka::install inherits kafka {
 
-  group { $group:
-    ensure => $group_ensure,
-    gid    => $gid,
+  if $group_manage == true {
+    group { $group:
+      ensure => $group_ensure,
+      gid    => $gid,
+    }
   }
 
-  user { $user:
-    ensure     => $user_ensure,
-    home       => $user_home,
-    shell      => $shell,
-    uid        => $uid,
-    comment    => $user_description,
-    gid        => $group,
-    managehome => $user_managehome,
-    require    => Group[$group],
+  if $user_manage == true {
+    user { $user:
+      ensure     => $user_ensure,
+      home       => $user_home,
+      shell      => $shell,
+      uid        => $uid,
+      comment    => $user_description,
+      gid        => $group,
+      managehome => $user_managehome,
+      require    => Group[$group],
+    }
   }
 
   package { 'kafka':

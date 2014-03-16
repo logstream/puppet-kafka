@@ -19,6 +19,7 @@ class kafka (
   $gid                 = $kafka::params::gid,
   $group               = $kafka::params::group,
   $group_ensure        = $kafka::params::group_ensure,
+  $group_manage        = hiera('kafka::group_manage', $kafka::params::group_manage),
   $hostname            = $kafka::params::hostname,
   $limits_manage       = hiera('kafka::limits_manage', $kafka::params::limits_manage),
   $limits_nofile       = $kafka::params::limits_nofile,
@@ -43,6 +44,7 @@ class kafka (
   $user_description    = $kafka::params::user_description,
   $user_ensure         = $kafka::params::user_ensure,
   $user_home           = $kafka::params::user_home,
+  $user_manage         = hiera('kafka::user_manage', $kafka::params::user_manage),
   $user_managehome     = hiera('kafka::user_managehome', $kafka::params::user_managehome),
 ) inherits kafka::params {
 
@@ -52,6 +54,7 @@ class kafka (
   if !is_integer($gid) { fail('The $gid parameter must be an integer number') }
   validate_string($group)
   validate_string($group_ensure)
+  validate_bool($group_manage)
   validate_string($hostname)
   validate_bool($limits_manage)
   if !is_integer($limits_nofile) { fail('The $limits_nofile parameter must be an integer number') }
@@ -80,6 +83,7 @@ class kafka (
   validate_string($user_description)
   validate_string($user_ensure)
   validate_absolute_path($user_home)
+  validate_bool($user_manage)
   validate_bool($user_managehome)
 
   include '::kafka::install'

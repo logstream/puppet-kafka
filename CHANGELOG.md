@@ -1,25 +1,32 @@
 # Change log
 
+## 1.0.3 (March 16, 2014)
+
+IMPROVEMENTS
+
+* Add `$user_manage` and `$group_manage` parameters.
+
+
 ## 1.0.2 (March 14, 2014)
 
-IMPROVEMENTS:
+IMPROVEMENTS
 
 * Initial support for testing this module.
     * A skeleton for acceptance testing (`rake acceptance`) was also added.
 
-BACKWARDS INCOMPATIBILITY:
+BACKWARDS INCOMPATIBILITY
 
 * Change default value of `$package_ensure` from "latest" to "present".
 * Puppet module fails if run on an unsupported platform.  Currently we only support the RHEL OS family.
 
-BUG FIXES:
+BUG FIXES
 
 * Properly generate broker configuration when multiple directories are specified for `$log_dirs`.
 
 
 ## 1.0.1 (March 11, 2014)
 
-IMPROVEMENTS:
+IMPROVEMENTS
 
 * Recursively create directories defined via `$log_dirs` if needed.
 

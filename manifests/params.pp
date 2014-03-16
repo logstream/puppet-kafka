@@ -14,6 +14,7 @@ class kafka::params {
   $gid                 = 53002
   $group               = 'kafka'
   $group_ensure        = 'present'
+  $group_manage        = true
   $hostname            = undef
   $limits_manage       = false
   $limits_nofile       = 65536
@@ -39,6 +40,7 @@ class kafka::params {
   $user_description    = 'Kafka system account'
   $user_ensure         = 'present'
   $user_home           = '/home/kafka'
+  $user_manage         = true
   $user_managehome     = true
 
   case $::osfamily {
