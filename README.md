@@ -162,7 +162,7 @@ classes:
   - supervisor
   - zookeeper::service
 
-## Custom supervisord settings (note: this is supervisord, not Storm's Supervisor daemon)
+## Custom supervisord settings
 supervisor::logfile_maxbytes: '20MB'
 supervisor::logfile_backups: 5
 
