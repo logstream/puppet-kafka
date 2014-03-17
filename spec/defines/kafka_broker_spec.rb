@@ -19,8 +19,8 @@ describe 'kafka::broker' do
         default_logging_configuration_file = '/opt/kafka/config/log4j-0.properties'
 
         describe "kafka broker with default settings on #{osfamily}" do
-          it { should contain_class("kafka::params") }
-          it { should contain_class("kafka") }
+          it { should contain_class('kafka::params') }
+          it { should contain_class('kafka') }
           it { should contain_kafka__broker('broker0') }
 
           it { should contain_supervisor__service('kafka-broker-0').with({
