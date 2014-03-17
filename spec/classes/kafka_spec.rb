@@ -95,7 +95,7 @@ describe 'kafka' do
         :osfamily => 'Debian',
       }}
 
-      it { expect { should contain_package('kafka') }.to raise_error(Puppet::Error,
+      it { expect { should contain_class('kafka') }.to raise_error(Puppet::Error,
         /The kafka module is not supported on a Debian based system./) }
     end
   end
