@@ -1,10 +1,11 @@
 # Change log
 
-## 1.0.3 (March 16, 2014)
+## 1.0.3 (March 17, 2014)
 
 IMPROVEMENTS
 
 * Add `$user_manage` and `$group_manage` parameters.
+* Add more unit tests.
 
 
 ## 1.0.2 (March 14, 2014)
