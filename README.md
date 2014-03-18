@@ -1,7 +1,7 @@
 # puppet-kafka [![Build Status](https://travis-ci.org/miguno/puppet-kafka.png?branch=master)](https://travis-ci.org/miguno/puppet-kafka)
 
-Wirbelsturm-compatible [Puppet](http://puppetlabs.com/) module to deploy [Kafka](http://kafka.apache.org/) 0.8+
-servers/brokers.
+[Wirbelsturm](https://github.com/miguno/wirbelsturm)-compatible [Puppet](http://puppetlabs.com/) module to deploy
+[Kafka](http://kafka.apache.org/) 0.8+ servers/brokers.
 
 You can use this Puppet module to deploy Kafka to physical and virtual machines, for instance via your existing
 internal or cloud-based Puppet infrastructure and via a tool such as [Vagrant](http://www.vagrantup.com/) for local
