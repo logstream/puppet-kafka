@@ -1,5 +1,12 @@
 # Change log
 
+## 1.0.4 (March 24, 2014)
+
+IMPROVEMENTS
+
+* Add `compile` test for `kafka::broker`.
+
+
 ## 1.0.3 (March 17, 2014)
 
 IMPROVEMENTS
