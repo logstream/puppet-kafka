@@ -12,6 +12,25 @@
 #   Use this parameter for all logging settings with the exception of configuring `-Dlog4j.configuration.file=...`.
 #   Use $logging_config for the latter.
 #
+# [*log_dirs*]
+#   An array of (absolute) paths that Kafka will use to store its data log files.  Note that the term "log file" here
+#   is not referring to logging data such as `/var/log/*`.  Using `$tmpfs_manage` you have the option to place one or
+#   more log directories on tmpfs, although you will lose any durability/persistence of course when doing so.
+#   Typically, you will not use tmpfs for Kafka's log directories.  Default: ['/app/kafka-broker-0']
+#
+# [*tmpfs_manage*]
+#   If true we create a tmpfs mount (see `$tmpfs_path`), which can be used to host Kafka's log directories (see
+#   `$log_dirs`.  Default: false.
+#
+# [*tmpfs_path*]
+#   The path to mount tmpfs.  At the moment the path must be a top-level directory (e.g. `/foo` is ok, but `/foo/bar`
+#   is not).  Any `$log_dirs` that you want to place on tmpfs should be sub-directories of `$tmpfs_path`.  For instance,
+#   if `$tmpfs_path` is set to `/tmpfs-0`, then you may want to use [`/tmpfs-0/dir1`, `/tmpfs-0/dir2`] for `$log_dirs`.
+#   Default: `/tmpfs-0`.
+#
+# [*tmpfs_size*]
+#   The size of the tmpfs mount.  Default: 0k.
+#
 # Note: When using a custom namespace/chroot in the ZooKeeper connection string you must manually create the namespace
 #       in ZK first (e.g. in 'localhost:2181/kafka' the namespace is '/kafka').
 define kafka::broker (
@@ -29,6 +48,9 @@ define kafka::broker (
   $kafka_opts        = undef,
   $log_dirs          = ['/app/kafka-broker-0'],
   $logging_config    = $kafka::params::logging_config,
+  $tmpfs_manage      = false,
+  $tmpfs_path        = '/tmpfs-0',
+  $tmpfs_size        = '0k',
   $zookeeper_connect = ['localhost:2181'],
 ) {
 
@@ -46,11 +68,33 @@ define kafka::broker (
   validate_string($kafka_opts)
   validate_array($log_dirs)
   validate_absolute_path($logging_config)
+  validate_bool($tmpfs_manage)
+  validate_absolute_path($tmpfs_path)
+  validate_string($tmpfs_size)
   validate_array($zookeeper_connect)
 
-  # These 'log' directories are used to store the actual data being sent to Kafka.  Do not confuse them with logging
-  # directories such as /var/log/*.
-  kafka::broker::create_log_dirs { $log_dirs: }
+  if $tmpfs_manage == false {
+    # These 'log' directories are used to store the actual data being sent to Kafka.  Do not confuse them with logging
+    # directories such as /var/log/*.
+    kafka::broker::create_log_dirs { $log_dirs: }
+  }
+  else {
+    # We must first create the directory that we intend to mount tmpfs on.
+    file { $tmpfs_path:
+      ensure => directory,
+      owner  => $kafka::user,
+      group  => $kafka::group,
+      mode   => '0750',
+    }->
+    mount { $tmpfs_path:
+      ensure  => mounted,
+      device  => 'none',
+      fstype  => 'tmpfs',
+      atboot  => true,
+      options => "size=${tmpfs_size}",
+    }->
+    kafka::broker::create_log_dirs { $log_dirs: }
+  }
 
   file { $config:
     ensure  => file,

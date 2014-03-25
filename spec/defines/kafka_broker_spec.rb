@@ -65,6 +65,8 @@ describe 'kafka::broker' do
             with_content(/^log4j.appender.requestAppender.File=\/var\/log\/kafka\/kafka-request-0.log$/).
             with_content(/^log4j.appender.controllerAppender.File=\/var\/log\/kafka\/controller-0.log$/)
           }
+
+          it { should_not contain_mount('/tmpfs-0') }
         end
 
         describe "kafka broker with a custom broker id on #{osfamily}" do
@@ -111,6 +113,20 @@ describe 'kafka::broker' do
           it { should contain_file(default_broker_configuration_file).
             with_content(/^log.dirs=\/app\/kafka-broker-0,\/app\/kafka-broker-1$/)
           }
+        end
+
+        describe "kafka broker with tmpfs enabled on #{osfamily}" do
+          let(:params) {{
+            :tmpfs_manage => true,
+          }}
+
+          it { should contain_mount('/tmpfs-0').with({
+            'ensure'  => 'mounted',
+            'device'  => 'none',
+            'fstype'  => 'tmpfs',
+            'atboot'  => true,
+            'options' => "size=0k",
+          })}
         end
 
       end

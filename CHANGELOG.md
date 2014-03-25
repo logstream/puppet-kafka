@@ -1,5 +1,14 @@
 # Change log
 
+## 1.0.5 (March 25, 2014)
+
+IMPROVEMENTS
+
+* Add experimental support to write Kafka (data) log files to a tmpfs mount.  See the new class parameters
+  `$tmpfs_manage` (default: false), `$tmpfs_path`, and `$tmpfs_size` in `broker.pp`.  Note that you want to use tmpfs
+  only in rare scenarios.
+
+
 ## 1.0.4 (March 24, 2014)
 
 IMPROVEMENTS
