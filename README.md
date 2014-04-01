@@ -401,6 +401,7 @@ Of particular interest are:
 
 * Enhance in-line documentation of Puppet manifests.
 * Add more unit tests and specs.
+* Add rollback/remove functionality to complete purge Kafka related packages and configuration files from a machine.
 
 
 <a name="changelog"></a>
