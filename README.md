@@ -173,10 +173,6 @@ classes:
 ## Custom supervisord settings
 supervisor::logfile_maxbytes: '20MB'
 supervisor::logfile_backups: 5
-
-## Custom ZooKeeper settings
-zookeeper::autopurge_snap_retain_count: 3
-zookeeper::max_client_connections: 500
 ```
 
 A more sophisticated example that overrides some of the default settings and also demonstrates the use of `$config_map`.
