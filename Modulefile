@@ -1,5 +1,5 @@
 name          'wirbelsturm-kafka'
-version       '1.0.6'
+version       '1.0.7'
 source        'https://github.com/miguno/puppet-kafka.git'
 author        'Michael G. Noll'
 license       'Apache License, Version 2.0'
