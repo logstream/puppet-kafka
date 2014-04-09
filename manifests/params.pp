@@ -12,6 +12,7 @@ class kafka::params {
   $embedded_log_dir    = "${base_dir}/logs"
   $gc_log_file         = '/var/log/kafka/daemon-gc-0.log'
   $gid                 = 53002
+  $global_config_map   = {}
   $group               = 'kafka'
   $group_ensure        = 'present'
   $group_manage        = true

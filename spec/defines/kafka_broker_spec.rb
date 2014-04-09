@@ -129,6 +129,45 @@ describe 'kafka::broker' do
           })}
         end
 
+        describe "kafka broker with a custom $config_map on #{osfamily}" do
+          let(:params) {{
+            :config_map => {
+              'log.roll.hours'      => 23,
+              'log.retention.hours' => 45,
+            },
+          }}
+
+          it { should contain_file(default_broker_configuration_file).
+            with_content(/^log\.roll\.hours=23$/).
+            with_content(/^log\.retention\.hours=45$/)
+          }
+        end
+
+        describe "kafka broker with a custom $config_map and an overlapping $global_config_map on #{osfamily}" do
+          let(:pre_condition) {[
+            firstCondition = <<-eos
+            class { "kafka":
+              global_config_map => {
+                "controlled.shutdown.enable" => true,
+                "log.roll.hours" => 12,
+              },
+            }
+            eos
+          ]}
+          let(:params) {{
+            :config_map => {
+              'log.roll.hours'      => 34,
+              'log.retention.hours' => 56,
+            },
+          }}
+
+          it { should contain_file(default_broker_configuration_file).
+            with_content(/^controlled\.shutdown\.enable=true$/).
+            with_content(/^log\.roll\.hours=34$/).
+            with_content(/^log\.retention\.hours=56$/)
+          }
+        end
+
       end
     end
   end

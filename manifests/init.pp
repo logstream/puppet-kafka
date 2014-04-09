@@ -17,6 +17,7 @@ class kafka (
   $config_template     = $kafka::params::config_template,
   $embedded_log_dir    = $kafka::params::embedded_log_dir,
   $gid                 = $kafka::params::gid,
+  $global_config_map   = $kafka::params::global_config_map,
   $group               = $kafka::params::group,
   $group_ensure        = $kafka::params::group_ensure,
   $group_manage        = hiera('kafka::group_manage', $kafka::params::group_manage),
@@ -52,6 +53,7 @@ class kafka (
   validate_string($config_template)
   validate_absolute_path($embedded_log_dir)
   if !is_integer($gid) { fail('The $gid parameter must be an integer number') }
+  validate_hash($global_config_map)
   validate_string($group)
   validate_string($group_ensure)
   validate_bool($group_manage)

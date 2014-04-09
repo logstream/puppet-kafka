@@ -73,6 +73,8 @@ define kafka::broker (
   validate_string($tmpfs_size)
   validate_array($zookeeper_connect)
 
+  $effective_config_map = merge($kafka::global_config_map, $config_map)
+
   if $tmpfs_manage == false {
     # These 'log' directories are used to store the actual data being sent to Kafka.  Do not confuse them with logging
     # directories such as /var/log/*.

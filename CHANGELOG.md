@@ -1,8 +1,8 @@
 # Change log
 
-## 1.0.7 (unreleased)
+## 1.0.7 (April 09, 2014)
 
-*TBD
+* Add `$kafka::global_config_map` to facilitate sharing Kafka config settings between broker instances.
 
 
 ## 1.0.6 (April 08, 2014)

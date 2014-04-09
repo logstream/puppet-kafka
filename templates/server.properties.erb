@@ -21,6 +21,6 @@ log.dirs=<%= @log_dirs.join(',') %>
 zookeeper.connect=<%= @zookeeper_connect.join(',') %>
 
 # Additional configuration options may follow here
-<% if @config_map -%><% @config_map.sort.each do |key,value| -%>
+<% if @effective_config_map -%><% @effective_config_map.sort.each do |key,value| -%>
 <%= key %>=<%= value %>
 <% end -%><% end -%>
