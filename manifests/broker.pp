@@ -38,7 +38,7 @@ define kafka::broker (
   $broker_port       = 9092,
   $config            = $kafka::params::config,
   $config_map        = {},
-  $gc_log_file       = $kafka::params::gc_log_file,
+  $gc_log_file       = '/var/log/kafka/daemon-gc-0.log',
   $jmx_port          = 9999,
   $kafka_gc_log_opts = '-verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps',
   $kafka_heap_opts   = '-Xmx256M',

@@ -10,7 +10,6 @@ class kafka::params {
   # we ensure that this directory exists and is writable by the designated Kafka user.  Our Puppet setup however does
   # not make use of this sub-directory.
   $embedded_log_dir    = "${base_dir}/logs"
-  $gc_log_file         = '/var/log/kafka/daemon-gc-0.log'
   $gid                 = 53002
   $global_config_map   = {}
   $group               = 'kafka'
