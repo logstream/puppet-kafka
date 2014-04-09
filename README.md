@@ -49,8 +49,6 @@ See section [Usage](#usage) below.
   deployed and to which machines.
 * Supports RHEL OS family (e.g. RHEL 6, CentOS 6, Amazon Linux).
     * Code contributions to support additional OS families are welcome!
-* Supports multiple Kafka brokers per machine via the class parameter `kafka::brokers`, which is a hash value.
-    * Note: For production setups it _is not_ recommended to run multiple brokers per machine.
 * Supports tuning of system-level configuration such as the maximum number of open files (cf.
   `/etc/security/limits.conf`) to optimize the performance of your Kafka deployments.
 * Kafka is run under process supervision via [supervisord](http://www.supervisord.org/) version 3.0+.
@@ -78,6 +76,7 @@ See section [Usage](#usage) below.
     * Take a look at LinkedIn's [Java setup for Kafka](https://kafka.apache.org/documentation.html#java).
 * This module requires the following **additional Puppet modules**:
 
+    * [puppetlabs/stdlib](https://github.com/puppetlabs/puppetlabs-stdlib)
     * [puppet-limits](https://github.com/miguno/puppet-limits)
     * [puppet-supervisor](https://github.com/miguno/puppet-supervisor)
 
@@ -105,7 +104,7 @@ Add the following lines to your `Puppetfile`:
 # use internal copies of stdlib so that their deployments are not coupled to the availability of PuppetForge.  While
 # there are tools such as puppet-library for hosting internal forges or for proxying to the public forge, not everyone
 # is actually using those tools.
-mod 'puppetlabs/stdlib'
+mod 'puppetlabs/stdlib', '>= 4.1.0'
 
 # Add the puppet-kafka module
 mod 'kafka',
@@ -187,70 +186,20 @@ classes:
   - supervisor
 
 ## Kafka
-kafka::brokers:
-  broker0:
-    broker_id: 0
-    config_map:
-      log.roll.hours: 48
-      log.retention.hours: 48
-    kafka_heap_opts: '-Xms2G -Xmx2G -XX:NewSize=256m -XX:MaxNewSize=256m'
-    kafka_opts: '-XX:CMSInitiatingOccupancyFraction=70 -XX:+PrintTenuringDistribution'
-    zookeeper_connect:
-      - 'zookeeper1:2181'
+kafka::broker_id: 0
+kafka::config_map:
+  log.roll.hours: 48
+  log.retention.hours: 48
+kafka::kafka_heap_opts: '-Xms2G -Xmx2G -XX:NewSize=256m -XX:MaxNewSize=256m'
+kafka::kafka_opts: '-XX:CMSInitiatingOccupancyFraction=70 -XX:+PrintTenuringDistribution'
+kafka::zookeeper_connect:
+  - 'zookeeper1:2181'
 
 # Optional: Manage /etc/security/limits.conf to tune the maximum number
 # of open files, which is a typical setting you must change for Kafka
 # production environments.  Default: false (do not manage)
 kafka::limits_manage: true
 kafka::limits_nofile: 65536
-```
-
-The next example shows how to deploy multiple Kafka brokers per machine.  This is not a recommended setup for production
-but helpful during development and testing.  The important aspect of such a multi-broker setup is that for each you
-define unique settings for configuration parameters such as the broker id, certain files and directories, TCP ports, etc.
-In a normal Kafka setup (i.e.  one broker per machine) you can normally safely rely on the default values for those
-settings, which will result in a much simpler and shorter Hiera configuration.
-
-```yaml
----
-classes:
-  - kafka::service
-  - supervisor
-
-# Note: In general it is NOT recommended to run multiple broker instances per Kafka box.
-kafka::brokers:
-  broker1:
-    broker_id: 1
-    broker_port: 9092
-    config: '/opt/kafka/config/server-1.properties'
-    config_map:
-      controlled.shutdown.enable: true
-      log.roll.hours: 48
-      log.retention.hours: 48
-    gc_log_file: '/var/log/kafka/daemon-gc-1.log'
-    jmx_port: 9999
-    kafka_heap_opts: '-Xms512M -Xmx512M -XX:NewSize=200m -XX:MaxNewSize=200m'
-    log_dirs:
-      - '/app/kafka-broker-1'
-    logging_config: '/opt/kafka/config/log4j-1.properties'
-    zookeeper_connect:
-      - 'zookeeper1:2181'
-  broker2:
-    broker_id: 2
-    broker_port: 9093
-    config: '/opt/kafka/config/server-2.properties'
-    config_map:
-      controlled.shutdown.enable: true
-      log.roll.hours: 48
-      log.retention.hours: 48
-    gc_log_file: '/var/log/kafka/daemon-gc-2.log'
-    jmx_port: 10000
-    kafka_heap_opts: '-Xms512M -Xmx512M -XX:NewSize=200m -XX:MaxNewSize=200m'
-    log_dirs:
-      - '/app/kafka-broker-2'
-    logging_config: '/opt/kafka/config/log4j-2.properties'
-    zookeeper_connect:
-      - 'zookeeper1:2181'
 ```
 
 
@@ -268,15 +217,14 @@ TBD
 
 ## Service management
 
-To manually start, stop, restart, or check the status of the Kafka broker service(s), respectively:
+To manually start, stop, restart, or check the status of the Kafka broker service, respectively:
 
-    $ sudo supervisorctl [start|stop|restart|status] kafka-broker-<id>
+    $ sudo supervisorctl [start|stop|restart|status] kafka-broker
 
 Example:
 
     $ sudo supervisorctl status
-    kafka-broker-1                        RUNNING    pid 16461, uptime 3 days, 09:22:38
-    kafka-broker-2                        RUNNING    pid 17305, uptime 3 days, 09:22:42
+    kafka-broker                          RUNNING    pid 16461, uptime 3 days, 09:22:38
 
 
 <a name="log-files"></a>
@@ -285,10 +233,10 @@ Example:
 
 _Note: The locations below may be different depending on the Kafka RPM you are actually using._
 
-* Kafka log files: `/var/log/kafka/*-<brokerId>.log`
+* Kafka log files: `/var/log/kafka/*.log`
 * Supervisord log files related to Kafka processes:
-    * `/var/log/supervisor/kafka-broker-<brokerId>/kafka-broker-<brokerId>.out`
-    * `/var/log/supervisor/kafka-broker-<brokerId>/kafka-broker-<brokerId>.err`
+    * `/var/log/supervisor/kafka-broker/kafka-broker.out`
+    * `/var/log/supervisor/kafka-broker/kafka-broker.err`
 * Supervisord main log file: `/var/log/supervisor/supervisord.log`
 
 

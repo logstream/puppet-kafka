@@ -1,8 +1,33 @@
 # Change log
 
-## 1.0.8 (unreleased)
+## 2.0.0 (April 09, 2014)
 
-* TBD
+IMPROVEMENTS
+
+* Simplify how this module is configured in Hiera, at the expense of breaking backwards compatibility by removing the
+  feature to run multiple broker instances on the same machine.
+* Introduces `config.pp`.
+* The functionality of the previous `broker.pp` code was split into `install.pp`, `config.pp`, and `service.pp`.
+  Parameters are now exclusively defined through `init.pp`, with defaults in `params.pp`.
+* Adds more unit tests.
+
+BACKWARDS INCOMPATIBILITY
+
+* Remove support for running multiple Kafka broker instances on the same box.
+    * As part of this change the functionality of the defined type `kafka::broker` was merged into `kafka::service`.
+* Remove `$kafka::global_config_map` `$kafka::broker::config_map` parameters, which have been superceded by
+  `$kafka::config_map`.
+* Default value of `$log_dirs` changed from `['/app/kafka-broker-0']` to `['/app/kafka/log']`
+* The broker ID index suffix was removed from various configuration and log files.  Examples:
+    * `server-0.properties` becomes `server.properties`.
+    * `log4j-0.properties` becomes `log4j.properties`.
+    * `daemon-gc-0.log` becomes `daemon-gc.log`.
+    * `state-change-0.log` becomes `state-change.log`.
+    * And so on.
+* Default value of `$tmpfs` changed from `/tmpfs-0` to `/tmpfs`.
+* The supervisord service name does not include the broker ID anymore because we do not support multiple broker
+  instances per target machine.  For instance, the default service name is changed from `kafka-broker-0` to
+  `kafka-broker`.
 
 
 ## 1.0.7 (April 09, 2014)
