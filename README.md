@@ -168,10 +168,6 @@ classes:
   - kafka::service
   - supervisor
   - zookeeper::service
-
-## Custom supervisord settings
-supervisor::logfile_maxbytes: '20MB'
-supervisor::logfile_backups: 5
 ```
 
 A more sophisticated example that overrides some of the default settings and also demonstrates the use of `$config_map`.
