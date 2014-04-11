@@ -129,11 +129,10 @@ Then use librarian-puppet to install (or update) the Puppet modules.
   configuration parameters.  These should be self-explanatory.
 * See [params.pp](manifests/params.pp) for the default values of those configuration parameters.
 
-Of special note is the class parameter `$config_map` in [broker.pp](manifests/broker.pp):  You can use this parameter
-to "inject" arbirtary Kafka config settings via Hiera/YAML into the Kafka broker configuration file (default name:
-`$KAFKA_HOME/config/server.properties`).  However you should not re-define config settings via `$config_map` that
-already have explicit Puppet class parameters (such as `$broker_id`).  See the examples below for more information on
-`$config_map` usage.
+Of special note is the class parameter `$config_map`:  You can use this parameter to "inject" arbitrary Kafka config
+settings via Hiera/YAML into the Kafka broker configuration file (default name: `server.properties`).  However you
+should not re-define config settings via `$config_map` that already have explicit Puppet class parameters (such as
+`$broker_id`).  See the examples below for more information on `$config_map` usage.
 
 
 <a name="usage"></a>
