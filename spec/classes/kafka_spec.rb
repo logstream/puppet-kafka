@@ -128,7 +128,7 @@ describe 'kafka' do
           it { should_not contain_user('kafka') }
         end
 
-        describe "kafka with custom user and group names on #{osfamily}" do
+        describe "kafka with custom user and group on #{osfamily}" do
           let(:params) {{
             :user_manage      => true,
             :gid              => 456,
