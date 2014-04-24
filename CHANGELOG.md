@@ -1,8 +1,17 @@
 # Change log
 
-## 2.0.1 (unreleased)
+## 2.0.1 (April 24, 2014)
 
-* TBD
+IMPROVEMENTS
+
+* Move user/group management into a separate Puppet class `kafka::users` to enforce correct resource ordering
+  regardless of whether the module should or should not manage the user/group.  This way we can make sure that the user
+  and group are available before we set permissions on files and directories.
+
+BACKWARDS INCOMPATIBILITIES
+
+* Remove the `$group_manage` parameter.  The `$user_manage` parameter now enables/disables both the user and the group
+  management.
 
 
 ## 2.0.0 (April 09, 2014)
@@ -16,7 +25,7 @@ IMPROVEMENTS
   Parameters are now exclusively defined through `init.pp`, with defaults in `params.pp`.
 * Adds more unit tests.
 
-BACKWARDS INCOMPATIBILITY
+BACKWARDS INCOMPATIBILITIES
 
 * Remove support for running multiple Kafka broker instances on the same box.
     * As part of this change the functionality of the defined type `kafka::broker` was merged into `kafka::service`.

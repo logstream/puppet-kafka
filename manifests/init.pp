@@ -49,7 +49,6 @@ class kafka (
   $gid                 = $kafka::params::gid,
   $group               = $kafka::params::group,
   $group_ensure        = $kafka::params::group_ensure,
-  $group_manage        = hiera('kafka::group_manage', $kafka::params::group_manage),
   $hostname            = $kafka::params::hostname,
   $jmx_port            = $kafka::params::jmx_port,
   $kafka_gc_log_opts   = $kafka::params::kafka_gc_log_opts,
@@ -103,7 +102,6 @@ class kafka (
   if !is_integer($gid) { fail('The $gid parameter must be an integer number') }
   validate_string($group)
   validate_string($group_ensure)
-  validate_bool($group_manage)
   validate_string($hostname)
   if !is_integer($jmx_port) { fail('The $jmx_port parameter must be an integer number') }
   validate_string($kafka_gc_log_opts)
@@ -148,6 +146,7 @@ class kafka (
   validate_bool($user_managehome)
   validate_array($zookeeper_connect)
 
+  include '::kafka::users'
   include '::kafka::install'
   include '::kafka::config'
   include '::kafka::service'
@@ -159,6 +158,7 @@ class kafka (
   anchor { 'kafka::end': }
 
   Anchor['kafka::begin']
+  -> Class['::kafka::users']
   -> Class['::kafka::install']
   -> Class['::kafka::config']
   ~> Class['::kafka::service']

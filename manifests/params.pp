@@ -17,7 +17,6 @@ class kafka::params {
   $gid                 = 53002
   $group               = 'kafka'
   $group_ensure        = 'present'
-  $group_manage        = true
   $hostname            = undef
   $jmx_port            = 9999
   $kafka_gc_log_opts   = '-verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps'

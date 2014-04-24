@@ -20,6 +20,7 @@ describe 'kafka' do
 
           it { should contain_class('kafka::params') }
           it { should contain_class('kafka') }
+          it { should contain_class('kafka::users').that_comes_before('kafka::install') }
           it { should contain_class('kafka::install').that_comes_before('kafka::config') }
           it { should contain_class('kafka::config') }
           it { should contain_class('kafka::service').that_subscribes_to('kafka::config') }
@@ -119,29 +120,43 @@ describe 'kafka' do
           it { should contain_limits__fragment('kafka/hard/nofile').with_value(65536) }
         end
 
-        describe "kafka with disabled group management on #{osfamily}" do
-          let(:params) {{
-            :group_manage => false,
-          }}
-          it { should_not contain_group('kafka') }
-          it { should contain_user('kafka') }
-        end
-
         describe "kafka with disabled user management on #{osfamily}" do
           let(:params) {{
             :user_manage  => false,
           }}
-          it { should contain_group('kafka') }
+          it { should_not contain_group('kafka') }
           it { should_not contain_user('kafka') }
         end
 
-        describe "kafka with disabled user and group management on #{osfamily}" do
+        describe "kafka with custom user and group names on #{osfamily}" do
           let(:params) {{
-            :group_manage => false,
-            :user_manage  => false,
+            :user_manage      => true,
+            :gid              => 456,
+            :group            => 'kafkagroup',
+            :uid              => 123,
+            :user             => 'kafkauser',
+            :user_description => 'Apache Kafka user',
+            :user_home        => '/home/kafkauser',
           }}
+
           it { should_not contain_group('kafka') }
           it { should_not contain_user('kafka') }
+
+          it { should contain_user('kafkauser').with({
+            'ensure'     => 'present',
+            'home'       => '/home/kafkauser',
+            'shell'      => '/bin/bash',
+            'uid'        => 123,
+            'comment'    => 'Apache Kafka user',
+            'gid'        => 'kafkagroup',
+            'managehome' => true,
+          })}
+
+          it { should contain_group('kafkagroup').with({
+            'ensure'     => 'present',
+            'gid'        => 456,
+          })}
+
         end
 
         describe "kafka with a custom broker id on #{osfamily}" do
