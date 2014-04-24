@@ -156,7 +156,6 @@ describe 'kafka' do
             'ensure'     => 'present',
             'gid'        => 456,
           })}
-
         end
 
         describe "kafka with a custom broker id on #{osfamily}" do
