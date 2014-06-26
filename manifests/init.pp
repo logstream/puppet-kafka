@@ -71,6 +71,7 @@ class kafka (
   $service_name        = $kafka::params::service_name,
   $service_retries     = $kafka::params::service_retries,
   $service_startsecs   = $kafka::params::service_startsecs,
+  $service_stopsecs    = $kafka::params::service_stopsecs,
   $service_stderr_logfile_keep    = $kafka::params::service_stderr_logfile_keep,
   $service_stderr_logfile_maxsize = $kafka::params::service_stderr_logfile_maxsize,
   $service_stdout_logfile_keep    = $kafka::params::service_stdout_logfile_keep,

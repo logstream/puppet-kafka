@@ -39,6 +39,7 @@ class kafka::params {
   $service_name        = 'kafka-broker'
   $service_retries     = 999
   $service_startsecs   = 10
+  $service_stopsecs    = 120
   $service_stderr_logfile_keep    = 10
   $service_stderr_logfile_maxsize = '20MB'
   $service_stdout_logfile_keep    = 5

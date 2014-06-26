@@ -62,6 +62,7 @@ class kafka::service inherits kafka {
       group                  => $kafka::group,
       autorestart            => $kafka::service_autorestart,
       startsecs              => $kafka::service_startsecs,
+      stopwait               => $kafka::service_stopsecs,
       retries                => $kafka::service_retries,
       stdout_logfile_maxsize => $kafka::service_stdout_logfile_maxsize,
       stdout_logfile_keep    => $kafka::service_stdout_logfile_keep,
