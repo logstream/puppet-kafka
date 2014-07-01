@@ -1,6 +1,6 @@
 # Change log
 
-## 2.0.2 (unreleased)
+## 2.0.2 (July 01, 2014)
 
 IMPROVEMENTS
 
