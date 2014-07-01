@@ -2,6 +2,23 @@
 
 ## 2.0.2 (unreleased)
 
+IMPROVEMENTS
+
+* Handle so-called "controlled" broker shutdowns in a better way by supporting a `$service_stopsecs` class parameter for
+  customizing the service configuration (supervisord) of Kafka brokers.  Previously, a broker that was performing a
+  controlled shutdown (which take longer than uncontrolled shutdowns) was likely to be killed prematurely by
+  supervisord. [GH-2] (thanks tioteath)
+    * The `$service_stopsecs` class parameter configures the `stopwaitsecs` configuration option of supervisord:
+      Here, supervisord will wait up to `stopwaitsecs` seconds for a process to gracefully shutdown before it will
+      SIGKILL the process.  We set the default value of `$service_stopsecs` to 120 (seconds), which is compatible with
+      the default shutdown cycle of Kafka brokers if controlled shutdowns are enabled.
+    * See `controlled.shutdown.max.retries` and `controlled.shutdown.retry.backoff.ms` in the Kafka broker
+      documentation.  Be aware that as of Kafka 0.8.1.1 the shutdown timeout of a Kafka broker is hardcoded to 30
+      seconds (cf. [KAFKA-1342](https://issues.apache.org/jira/browse/KAFKA-1342)).  Doing the math, a controlled
+      shutdown of Kafka using the default broker configuration settings will take about `3x (30s + 5s) = 105s`.
+
+GENERAL
+
 * bootstrap: Use new GitHub.com URL for retrieving raw user content.
 
 
