@@ -133,6 +133,7 @@ class kafka (
     fail('The $service_stdout_logfile_keep parameter must be an integer number')
   }
   validate_string($service_stdout_logfile_maxsize)
+  if !is_integer($service_stopsecs) { fail('The $service_stopsecs parameter must be an integer number') }
   validate_absolute_path($shell)
   validate_absolute_path($system_log_dir)
   validate_bool($tmpfs_manage)
