@@ -105,6 +105,7 @@ describe 'kafka' do
             'retries'     => 999,
             'stopsignal'  => 'INT',
             'stopasgroup' => true,
+            'stopwait'    => 120,
             'stdout_logfile_maxsize' => '20MB',
             'stdout_logfile_keep'    => 5,
             'stderr_logfile_maxsize' => '20MB',
