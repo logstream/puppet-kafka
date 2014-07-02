@@ -14,8 +14,8 @@ class kafka::params {
   # not make use of this sub-directory.
   $embedded_log_dir    = "${base_dir}/logs"
   $gc_log_file         = '/var/log/kafka/daemon-gc.log'
-  $gid                 = 53002
-  $group               = 'kafka'
+  $gid                 = 0
+  $group               = 'service'
   $group_ensure        = 'present'
   $hostname            = undef
   $jmx_port            = 9999
@@ -28,6 +28,7 @@ class kafka::params {
   $limits_manage       = false
   $limits_nofile       = 65536
   $log_dirs            = ['/app/kafka/log']
+  $config_dir          = "${base_dir}/config"
   $logging_config      = "${base_dir}/config/log4j.properties"
   $logging_config_template        = 'kafka/log4j.properties.erb'
   $autoupgrade         = false

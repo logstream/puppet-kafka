@@ -38,6 +38,7 @@
 #
 class kafka (
   $base_dir            = $kafka::params::base_dir,
+  $config_dir          = $kafka::params::config_dir,
   $broker_id           = $kafka::params::broker_id,
   $broker_port         = $kafka::params::broker_port,
   $command             = $kafka::params::command,
