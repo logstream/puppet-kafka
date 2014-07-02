@@ -30,6 +30,7 @@ class kafka::params {
   $log_dirs            = ['/app/kafka/log']
   $logging_config      = "${base_dir}/config/log4j.properties"
   $logging_config_template        = 'kafka/log4j.properties.erb'
+  $autoupgrade         = false
   $package_ensure      = 'present'
   $package_name        = 'kafka'
   $service_autorestart = true
@@ -60,9 +61,34 @@ class kafka::params {
 
   case $::osfamily {
     'RedHat': {}
+    'Debian': {}
 
     default: {
       fail("The ${module_name} module is not supported on a ${::osfamily} based system.")
+    }
+  }
+
+  case $::kernel {
+    'Linux': {
+      $package_dir = '/opt/kafka/swdl'
+    }
+    default: {
+      fail("\"${module_name}\" provides no config directory default value for \"${::kernel}\"")
+    }
+  }
+
+  # Download tool
+
+  case $::kernel {
+    'Linux': {
+      $download_tool = 'wget -O'
+    }
+    'Darwin': {
+      $download_tool = 'curl -o'
+    }
+    default: {
+      fail("\"${module_name}\" provides no download tool default value
+           for \"${::kernel}\"")
     }
   }
 }

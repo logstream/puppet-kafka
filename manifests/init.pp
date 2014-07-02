@@ -62,8 +62,17 @@ class kafka (
   $log_dirs            = $kafka::params::log_dirs,
   $logging_config      = $kafka::params::logging_config,
   $logging_config_template        = $kafka::params::logging_config_template,
+
+  $version             = false,
+  $autoupgrade         = $kafka::params::autoupgrade,
+  $package_provider    = 'package',
   $package_ensure      = $kafka::params::package_ensure,
   $package_name        = $kafka::params::package_name,
+  $package_url         = undef,
+  $package_dir         = $kafka::params::package_dir,
+  $purge_package_dir   = false,
+  $package_dl_timeout  = 600,  # package download timeout
+
   $service_autorestart = hiera('kafka::service_autorestart', $kafka::params::service_autorestart),
   $service_enable      = hiera('kafka::service_enable', $kafka::params::service_enable),
   $service_ensure      = $kafka::params::service_ensure,
@@ -152,6 +161,9 @@ class kafka (
   include '::kafka::install'
   include '::kafka::config'
   include '::kafka::service'
+
+  # package(s)
+  class { 'kafka::package': }
 
   # Anchor this as per #8040 - this ensures that classes won't float off and
   # mess everything up. You can read about this at:
