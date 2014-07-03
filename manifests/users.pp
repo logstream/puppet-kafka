@@ -17,7 +17,7 @@ class kafka::users inherits kafka {
       shell      => $shell,
       uid        => $uid,
       comment    => $user_description,
-      gid        => $group,
+      groups     => ["$group"],
       managehome => $user_managehome,
 #      require    => Group[$group],
     }
