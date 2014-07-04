@@ -2,6 +2,12 @@
 #
 class kafka::config inherits kafka {
 
+  file { $config_dir:
+    ensure  => directory,
+    owner   => root,
+    group   => root,
+  }
+
   file { $config:
     ensure  => file,
     owner   => root,

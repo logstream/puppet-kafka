@@ -2,10 +2,10 @@
 #
 class kafka::install inherits kafka {
 
-  package { 'kafka':
-    ensure  => $package_ensure,
-    name    => $package_name,
-  }
+#  package { 'kafka':
+#    ensure  => $package_ensure,
+#    name    => $package_name,
+#  }
 
   # We primarily (or only?) create this directory because some Kafka scripts have hard-coded references to it.
   file { $embedded_log_dir:

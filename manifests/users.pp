@@ -4,9 +4,11 @@ class kafka::users inherits kafka {
 
   if $user_manage == true {
 
-    group { $group:
-      ensure => $group_ensure,
-      gid    => $gid,
+    if $gid != 0 {
+      group { $group:
+        ensure => $group_ensure,
+        gid    => $gid,
+      }
     }
 
     user { $user:
@@ -15,9 +17,9 @@ class kafka::users inherits kafka {
       shell      => $shell,
       uid        => $uid,
       comment    => $user_description,
-      gid        => $group,
+      groups     => ["$group"],
       managehome => $user_managehome,
-      require    => Group[$group],
+#      require    => Group[$group],
     }
 
   }
