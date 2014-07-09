@@ -51,7 +51,7 @@ class kafka::params {
   $tmpfs_manage        = false
   $tmpfs_path          = '/tmpfs'
   $tmpfs_size          = '0k'
-  $uid                 = 53002
+  $uid                 = 53007
   $user                = 'kafka'
   $user_description    = 'Kafka system account'
   $user_ensure         = 'present'
